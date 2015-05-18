@@ -3,19 +3,28 @@
 
 #include <vector>
 #include <QString>
+#include <QImage>
 
 class HammingNetwork {
 private:
-    /* input pattern size */
+    // activation function parameters
+    const int LO = -1; // black color
+    const int HI = 1; // white color
+    const int T = 0; // threshold for the activation function
+
+    // max number iteration of Hopfield layer
+    const int MAX_ITER = 700;
+
+    // input pattern size
     int img_height_;
     int img_width_;
 
-    /* network size */
+    // network size
     int size_layer_0_;
     int size_layer_1_;
 
     // braking coefficient
-    double braking_; //(1.0/(SIZE_LAYER_1*2.0))
+    double braking_;
 
     std::vector<double> layer_0_;
     std::vector<double> layer_1_;
@@ -24,68 +33,109 @@ private:
     // weidght matrix hamming
     std::vector< std::vector<double> > weight_hamming_;
 
-public:
-    HammingNetwork(int width = 17, int height = 31);
-
-    /* activation function parameters */
-    const int LO =  -1;
-    const int HI = 1;
-    const int T = 0;
-
-    // max number iteration of Hopfield layer
-    const int MAX_ITER = 700;
+    // save images of patterns
+    std::vector<QImage> patterns_images_;
 
     /**
-     * @brief loadInputFromFile
-     * @param filePath
-     */
-    void LoadInputFromFile(QString filePath);
-
-    /**
-     * @brief training Training hamming layer
-     * @param files list which contains path to patterns
-     **/
-    void Training(std::vector<QString> files);
-
-    /**
-     * @brief state_hamming
-     * @return state of neuron num
+     * @brief StateHamming
+     * @return
      */
     double StateHamming(int);
 
     /**
-     * @brief step_hamming
+     * @brief StepHamming
      */
     void StepHamming();
 
     /**
-     * @brief stable_hopfield
+     * @brief StableHopfield
      * @return
      */
     bool StableHopfield();
 
     /**
-     * @brief activate_function_hopfield
+     * @brief HopfieldActivateFunction
      * @return
      */
     double HopfieldActivateFunction(double);
 
     /**
-     * @brief state_hopfield
+     * @brief StateHopfield
      * @return
      */
     double StateHopfield(int);
 
     /**
-     * @brief step_hopfield
+     * @brief StepHopfield
      */
     void StepHopfield();
 
     /**
-     * @brief step
+     * @brief LoadInputToLayer
+     * @param img
+     * @return
      */
-    void Step();
+    bool LoadInputToLayer(QImage img);
 
+    /**
+     * @brief LoadInputFromFile
+     * @param filePath
+     * @return
+     */
+    bool LoadInputFromFile(QString filePath);
+
+public:
+    HammingNetwork(int width = 17, int height = 31);
+
+    /**
+     * @brief AddPattern
+     * @return
+     */
+    bool AddPattern(QString);
+
+    /**
+     * @brief AddPattern
+     * @return
+     */
+    bool AddPattern(QImage);
+
+    /**
+     * @brief Train
+     * @return
+     */
+    bool Train();
+
+    /**
+     * @brief TestPattern
+     * @param img
+     * @return
+     */
+    int TestPattern(QImage img);
+
+    /**
+     * @brief GetPattern
+     * @param index
+     * @return
+     */
+    QImage GetPattern(int index);
+
+    /**
+     * @brief GetZeroLayerSize
+     * @return
+     */
+    int GetZeroLayerSize();
+
+    /**
+     * @brief GetFirstLayerSize
+     * @return
+     */
+    int GetFirstLayerSize();
+
+    /**
+     * @brief GetCountOfPatterns
+     * @return
+     */
+    int GetCountOfPatterns();
 };
 
 #endif // HAMMINGNETWORK_H
