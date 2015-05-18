@@ -103,13 +103,13 @@ int HammingNetwork::TestPattern(QImage img) {
 
 bool HammingNetwork::AddPattern(QString filePath) {
     QImage img(filePath);
-    if(img.width() != img_width_ || img.height() != img_height_)
-        return false;
-
     return AddPattern(img);
 }
 
 bool HammingNetwork::AddPattern(QImage img) {
+    if(img.width() != img_width_ || img.height() != img_height_)
+        return false;
+
     patterns_images_.push_back(img);
     size_layer_1_++;
     return true;
