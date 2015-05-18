@@ -172,6 +172,13 @@ public:
      * @return
      */
     NetworkInformation GetInformation();
+
+    /**
+     * @brief Resize
+     * @param width
+     * @param height
+     */
+    void Resize(int width, int height);
 };
 
 #endif // HAMMINGNETWORK_H

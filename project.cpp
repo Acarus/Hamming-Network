@@ -2,6 +2,7 @@
 #include <QDataStream>
 #include <QFile>
 #include <QList>
+#include <QDebug>
 
 Project::Project() {
 }
@@ -16,7 +17,7 @@ bool Project::Create(std::vector<QImage> patterns) {
         if(!net_.AddPattern(patterns.at(i)))
             return false;
 
-    // training hamming network
+   // training hamming network
     if(!net_.Train())
         return false;
 
@@ -90,7 +91,16 @@ bool Project::Open(QString source_project_file) {
     QDataStream ds(&file);
     QList<QImage> patterns;
     ds >> patterns;
+    ds >> number_of_attempts_;
+    ds >> number_of_errors_;
 
+    int width;
+    int height;
+
+    ds >> width;
+    ds >> height;
+
+    net_.Resize(width, height);
     // add patterns
     for(int i = 0; i < patterns.size(); i++)
         if(!net_.AddPattern(patterns.at(i)))
@@ -99,9 +109,6 @@ bool Project::Open(QString source_project_file) {
     // training hamming network
     if(!net_.Train())
         return false;
-
-    ds >> number_of_attempts_;
-    ds >> number_of_errors_;
 
     ready_ = true;
     project_file_path_ = source_project_file;
@@ -130,6 +137,8 @@ bool Project::SaveAs(QString project_path) {
     ds << patterns;
     ds << number_of_attempts_;
     ds << number_of_errors_;
+    ds << net_.GetImageWidth();
+    ds << net_.GetImageHeight();
 
     //file.flush();
     file.close();
@@ -156,4 +165,8 @@ void Project::IncreaseError() {
         number_of_errors_++;
         votes_--;
     }
+}
+
+void Project::Resize(int width, int height) {
+    net_.Resize(width, height);
 }

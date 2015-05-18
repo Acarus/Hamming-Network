@@ -20,3 +20,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     hammingnetwork.h \
     project.h
+
+RESOURCES += \
+    resources.qrc

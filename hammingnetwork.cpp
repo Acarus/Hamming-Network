@@ -30,6 +30,8 @@ bool HammingNetwork::LoadInputToLayer(QImage img) {
 }
 
 bool HammingNetwork::Train() {
+    size_layer_0_ = img_width_ * img_height_;
+
     // allocate memory
     layer_0_.assign(size_layer_0_, 0);
     layer_1_.assign(size_layer_1_, 0);
@@ -149,4 +151,9 @@ int HammingNetwork::GetImageHeight() {
 
 NetworkInformation HammingNetwork::GetInformation() {
     return NetworkInformation(weight_hamming_, size_layer_0_, size_layer_1_);
+}
+
+void HammingNetwork::Resize(int width, int height) {
+    img_width_ = width;
+    img_height_ = height;
 }

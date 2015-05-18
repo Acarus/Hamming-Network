@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/img/menu">
+        <file>resources/New-Project.ico</file>
+        <file>resources/Save-Project.ico</file>
+        <file>resources/Save-Project-As.ico</file>
+        <file>resources/Open-Project.ico</file>
+    </qresource>
+</RCC>

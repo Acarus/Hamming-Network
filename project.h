@@ -119,6 +119,14 @@ public:
      * @brief IncreaseError
      */
     void IncreaseError();
+
+    /**
+     * @brief Resize
+     * @param width
+     * @param height
+     */
+    void Resize(int width, int height);
+
 };
 
 #endif // PROJECT_H
