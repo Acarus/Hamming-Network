@@ -13,13 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     hammingnetwork.cpp \
-    project.cpp
+    project.cpp \
+    window.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     hammingnetwork.h \
-    project.h
+    project.h \
+    window.h
 
 RESOURCES += \
     resources.qrc
+
+FORMS += \
+    window.ui

@@ -1,16 +1,26 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
 #include <QIcon>
 #include <QToolBar>
 #include <QMenu>
 #include <QAction>
 #include <QMenuBar>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QFormLayout>
 
 #include "project.h"
 
-class MainWindow : public QMainWindow {
+namespace Ui {
+class Window;
+}
+
+class Window : public QMainWindow {
     Q_OBJECT
 
     QAction* new_project_a_;
@@ -26,6 +36,8 @@ class MainWindow : public QMainWindow {
 
     Project project_;
 
+    Ui::Window *ui;
+
     void ShowSaveButtons();
     void HideSaveButtons();
 
@@ -36,14 +48,15 @@ public:
 
     const QString PROJECT_EXT = ".proj";
 
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    Window(QWidget *parent = 0);
+    ~Window();
 
 public slots:
     void OpenProject();
     void NewProject();
     void SaveProject();
     void SaveProjectAs();
+    void LoadImageFromFile();
 };
 
-#endif // MAINWINDOW_H
+#endif WINDOW_H
