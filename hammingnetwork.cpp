@@ -101,6 +101,11 @@ int HammingNetwork::TestPattern(QImage img) {
     return std::distance(layer_1_.begin(), std::max_element(layer_1_.begin(), layer_1_.end()));
 }
 
+int HammingNetwork::TestPattern(QString filePath) {
+    QImage img(filePath);
+    return TestPattern(img);
+}
+
 bool HammingNetwork::AddPattern(QString filePath) {
     QImage img(filePath);
     return AddPattern(img);

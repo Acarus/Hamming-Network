@@ -113,6 +113,13 @@ public:
     int TestPattern(QImage img);
 
     /**
+     * @brief TestPattern
+     * @param filePath
+     * @return
+     */
+    int TestPattern(QString filePath);
+
+    /**
      * @brief GetPattern
      * @param index
      * @return

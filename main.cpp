@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
     qDebug() << net.Train();
 
-    qDebug() << "result = " << net.TestPattern(QImage("/home/acarus/data/test/5.bmp"));
+    qDebug() << "result = " << net.TestPattern("/home/acarus/data/test/5.bmp");
 
     qDebug() << "finished";
 
