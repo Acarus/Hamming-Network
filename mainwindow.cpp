@@ -95,7 +95,9 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::OpenProject() {
-    QString file_path = QFileDialog::getOpenFileName(this, tr("Open project"), QDir::currentPath(), tr("Project file (*.proj)"));
+    QString filter;
+    filter.sprintf(tr("Project file (*%s)").toStdString().c_str(), PROJECT_EXT.toStdString().c_str());
+    QString file_path = QFileDialog::getOpenFileName(this, tr("Open project"), QDir::currentPath(), filter);
 
     if(file_path.size() > 0) {
         if(!project_.Open(file_path)) {
@@ -156,7 +158,9 @@ void MainWindow::SaveProject() {
 }
 
 void MainWindow::SaveProjectAs() {
-    QString file_path = QFileDialog::getSaveFileName(this, tr("Save as"), QDir::currentPath(), "Project file (*.proj)");
+    QString filter;
+    filter.sprintf(tr("Project file (*%s)").toStdString().c_str(), PROJECT_EXT.toStdString().c_str());
+    QString file_path = QFileDialog::getSaveFileName(this, tr("Save as"), QDir::currentPath(), filter);
     if(file_path.size() > 0) {
         // check file extension
         if(file_path.indexOf(PROJECT_EXT) < 0 || file_path.indexOf(PROJECT_EXT) != file_path.size() - PROJECT_EXT.size()) {
