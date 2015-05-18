@@ -7,12 +7,14 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+QMAKE_CXXFLAGS += -std=c++0x
 TARGET = HammingNetwork
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    hammingnetwork.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    hammingnetwork.h
