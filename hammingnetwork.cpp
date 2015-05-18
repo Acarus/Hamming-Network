@@ -146,3 +146,7 @@ int HammingNetwork::GetImageWidth() {
 int HammingNetwork::GetImageHeight() {
     return img_height_;
 }
+
+NetworkInformation HammingNetwork::GetInformation() {
+    return NetworkInformation(weight_hamming_, size_layer_0_, size_layer_1_);
+}

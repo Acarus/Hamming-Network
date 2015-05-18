@@ -5,6 +5,17 @@
 #include <QString>
 #include <QImage>
 
+struct NetworkInformation {
+    std::vector< std::vector<double> > hamming_layer_weights;
+    int layer_0_size;
+    int layer_1_size;
+
+    NetworkInformation(std::vector< std::vector<double> > w, int l0s, int l1s) : hamming_layer_weights(w),
+                                                                             layer_0_size(l0s),
+                                                                             layer_1_size(l1s) {
+    }
+};
+
 class HammingNetwork {
 private:
     // activation function parameters
@@ -155,6 +166,12 @@ public:
      * @return
      */
     int GetImageHeight();
+
+    /**
+     * @brief GetInformation
+     * @return
+     */
+    NetworkInformation GetInformation();
 };
 
 #endif // HAMMINGNETWORK_H
