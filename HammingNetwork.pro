@@ -14,7 +14,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    hammingnetwork.cpp
+    hammingnetwork.cpp \
+    project.cpp
 
 HEADERS  += mainwindow.h \
-    hammingnetwork.h
+    hammingnetwork.h \
+    project.h
