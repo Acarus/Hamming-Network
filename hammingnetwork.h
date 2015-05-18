@@ -143,6 +143,18 @@ public:
      * @return
      */
     int GetCountOfPatterns();
+
+    /**
+     * @brief GetImageWidth
+     * @return
+     */
+    int GetImageWidth();
+
+    /**
+     * @brief GetImageHeight
+     * @return
+     */
+    int GetImageHeight();
 };
 
 #endif // HAMMINGNETWORK_H

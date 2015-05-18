@@ -138,3 +138,11 @@ QImage HammingNetwork::GetPattern(int index) {
 
     return patterns_images_.at(index);
 }
+
+int HammingNetwork::GetImageWidth() {
+    return img_width_;
+}
+
+int HammingNetwork::GetImageHeight() {
+    return img_height_;
+}
