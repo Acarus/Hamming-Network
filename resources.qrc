@@ -4,5 +4,7 @@
         <file>resources/Save-Project.ico</file>
         <file>resources/Save-Project-As.ico</file>
         <file>resources/Open-Project.ico</file>
+        <file>resources/input.png</file>
+        <file>resources/ouput.png</file>
     </qresource>
 </RCC>

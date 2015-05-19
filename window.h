@@ -38,13 +38,13 @@ class Window : public QMainWindow {
 
     Ui::Window *ui;
 
-    void ShowSaveButtons();
-    void HideSaveButtons();
+    void ShowAll();
+    void HideAll();
 
 public:
 
-    const int DEAFAULT_WIDTH = 800;
-    const int DEFAULT_HEIGHT = 600;
+    const int DEAFAULT_WIDTH = 600;
+    const int DEFAULT_HEIGHT = 400;
 
     const QString PROJECT_EXT = ".proj";
 
@@ -56,7 +56,9 @@ public slots:
     void NewProject();
     void SaveProject();
     void SaveProjectAs();
-    void LoadImageFromFile();
+
+private slots:
+    void on_load_btn_clicked();
 };
 
 #endif WINDOW_H

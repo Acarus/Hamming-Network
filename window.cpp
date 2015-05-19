@@ -10,15 +10,16 @@
 
 #include <QGridLayout>
 
-
-void Window::ShowSaveButtons() {
+void Window::ShowAll() {
     save_project_a_->setEnabled(true);
     save_project_as_a_->setEnabled(true);
+    centralWidget()->setEnabled(true);
 }
 
-void Window::HideSaveButtons() {
+void Window::HideAll() {
     save_project_a_->setEnabled(false);
     save_project_as_a_->setEnabled(false);
+    centralWidget()->setEnabled(false);
 }
 
 Window::Window(QWidget *parent) :
@@ -97,6 +98,8 @@ Window::Window(QWidget *parent) :
     int desktop_height = desktop.height();
     setGeometry(desktop_width/2 - DEAFAULT_WIDTH/2, desktop_height/2 - DEFAULT_HEIGHT/2, DEAFAULT_WIDTH, DEFAULT_HEIGHT);
 
+    centralWidget()->setEnabled(false);
+    setWindowTitle(tr("Hamming Network"));
 }
 
 Window::~Window()
@@ -117,7 +120,7 @@ void Window::OpenProject() {
         }  else {
             qDebug() << "opened!!!";
             qDebug() << file_path;
-            ShowSaveButtons();
+            ShowAll();
         }
     }
 }
@@ -153,7 +156,7 @@ void Window::NewProject() {
             QMessageBox::critical(this, tr("Error"), tr("Can't create new project!"));
         } else {
             qDebug() << "created new project";
-            ShowSaveButtons();
+            ShowAll();
         }
     }
 
@@ -182,6 +185,14 @@ void Window::SaveProjectAs() {
     }
 }
 
-void Window::LoadImageFromFile() {
 
+
+void Window::on_load_btn_clicked() {
+    QString file_path = QFileDialog::getOpenFileName(this, tr("Input"), QDir::currentPath(), tr("Images (*.png *.bmp *.jpg)"));
+    if(file_path.size() > 0) {
+        qDebug() << file_path;
+        QImage img = project_.GetSimilarPattern(file_path);
+        ui->input->setPixmap(QPixmap(file_path));
+        ui->output->setPixmap(QPixmap::fromImage(img));
+    }
 }
