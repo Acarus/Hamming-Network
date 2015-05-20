@@ -24,7 +24,7 @@ private:
     const int T = 0; // threshold for the activation function
 
     // max number iteration of Hopfield layer
-    const int MAX_ITER = 700;
+    const int MAX_ITER = 1400;
 
     // input pattern size
     int img_height_;

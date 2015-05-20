@@ -13,19 +13,20 @@
 void Window::ShowAll() {
     save_project_a_->setEnabled(true);
     save_project_as_a_->setEnabled(true);
+    multi_test_a_->setEnabled(true);
     centralWidget()->setEnabled(true);
 }
 
 void Window::HideAll() {
     save_project_a_->setEnabled(false);
     save_project_as_a_->setEnabled(false);
+    multi_test_a_->setEnabled(false);
     centralWidget()->setEnabled(false);
 }
 
 Window::Window(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Window)
-{
+    ui(new Ui::Window) {
     ui->setupUi(this);
 
     new_project_a_ = new QAction(this);
@@ -48,7 +49,6 @@ Window::Window(QWidget *parent) :
     save_project_a_->setIcon(QIcon(":/img/menu/resources/Save-Project.ico"));
     save_project_a_->setToolTip(tr("Save project"));
     save_project_a_->setText(tr("Save"));
-    save_project_a_->setEnabled(false);
     save_project_a_->setIconVisibleInMenu(false);
     save_project_a_->setShortcut(Qt::Key_S | Qt::CTRL);
     connect(save_project_a_, SIGNAL(triggered()), this, SLOT(SaveProject()));
@@ -57,7 +57,6 @@ Window::Window(QWidget *parent) :
     save_project_as_a_->setIcon(QIcon(":/img/menu/resources/Save-Project-As.ico"));
     save_project_as_a_->setToolTip("Save project as");
     save_project_as_a_->setText("Save as");
-    save_project_as_a_->setEnabled(false);
     save_project_as_a_->setIconVisibleInMenu(false);
     save_project_as_a_->setShortcut(Qt::Key_F12);
     connect(save_project_as_a_, SIGNAL(triggered()), this, SLOT(SaveProjectAs()));
@@ -66,12 +65,19 @@ Window::Window(QWidget *parent) :
     exit_a_->setText(tr("Exit"));
     connect(exit_a_, SIGNAL(triggered()), qApp, SLOT(quit()));
 
+    multi_test_a_ = new QAction(this);
+    multi_test_a_->setIcon(QIcon(":/img/menu/resources/test.ico"));
+    multi_test_a_->setText(tr("Test"));
+    multi_test_a_->setToolTip(tr("Test"));
+    connect(multi_test_a_, SIGNAL(triggered()), this, SLOT(Test()));
+
     // create tool bar
     tool_bar_ = new QToolBar(this);
     tool_bar_->addAction(new_project_a_);
     tool_bar_->addAction(open_project_a_);
     tool_bar_->addAction(save_project_a_);
     tool_bar_->addAction(save_project_as_a_);
+    tool_bar_->addAction(multi_test_a_);
     addToolBar(tool_bar_);
 
 
@@ -100,6 +106,7 @@ Window::Window(QWidget *parent) :
 
     centralWidget()->setEnabled(false);
     setWindowTitle(tr("Hamming Network"));
+    HideAll();
 }
 
 Window::~Window()
@@ -194,5 +201,47 @@ void Window::on_load_btn_clicked() {
         QImage img = project_.GetSimilarPattern(file_path);
         ui->input->setPixmap(QPixmap(file_path));
         ui->output->setPixmap(QPixmap::fromImage(img));
+        prev_image_ = file_path;
     }
 }
+
+void Window::on_pushButton_clicked() {
+    if(prev_image_.size() > 0) {
+        QImage img = project_.GetSimilarPattern(prev_image_);
+        ui->input->setPixmap(QPixmap(prev_image_));
+        ui->output->setPixmap(QPixmap::fromImage(img));
+    }
+}
+
+void Window::Test() {
+    QList<QString> files = QFileDialog::getOpenFileNames(this, tr("Test images"), QDir::currentPath(), tr("Images (*.png *.bmp *.jpg)"));
+    if(files.size() > 0) {
+       QString to_save = QFileDialog::getExistingDirectory(this, tr("Select folder"), QDir::currentPath());
+       QDir dir(to_save);
+       if(to_save.size() > 0) {
+           for(int i = 0; i < files.size(); i++) {
+               QImage img_inp(files.at(i));
+               QImage img_ans = project_.GetSimilarPattern(files.at(i));
+               img_inp.save(dir.absoluteFilePath(QString().sprintf("input_%d.png", i + 1)));
+               img_ans.save(dir.absoluteFilePath(QString().sprintf("output_%d.png", i + 1)));
+            }
+
+           // Create html page
+           QFile file(dir.absoluteFilePath("index.html"));
+           if(file.open(QIODevice::WriteOnly)) {;
+               QTextStream ts(&file);
+               ts << "<html><head><title>Test result</title></head><body><span style=\"color:gray; font-size: 24px;\">Test result: </span><p><table><tr><th>IN</th><th>OUT</th></tr>";
+
+               for(int i = 0; i < files.size(); i++) {
+                   ts << "<tr>";
+                   ts << QString().sprintf("<th><img src = 'input_%d.png'/></th><th><img src = 'output_%d.png'/></th>", i + 1, i + 1);
+                   ts << "</tr>";
+               }
+               ts << "</p></table></body></html>";
+           }
+
+           file.close();
+           QMessageBox::information(this, tr("Message"), tr("Success!"));
+       }
+    }
+ }

@@ -6,5 +6,6 @@
         <file>resources/Open-Project.ico</file>
         <file>resources/input.png</file>
         <file>resources/ouput.png</file>
+        <file>resources/test.ico</file>
     </qresource>
 </RCC>

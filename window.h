@@ -28,6 +28,7 @@ class Window : public QMainWindow {
     QAction* save_project_a_;
     QAction* save_project_as_a_;
     QAction* exit_a_;
+    QAction* multi_test_a_;
 
     QToolBar* tool_bar_;
 
@@ -41,6 +42,8 @@ class Window : public QMainWindow {
     void ShowAll();
     void HideAll();
 
+    QString prev_image_;
+
 public:
 
     const int DEAFAULT_WIDTH = 600;
@@ -51,14 +54,16 @@ public:
     Window(QWidget *parent = 0);
     ~Window();
 
-public slots:
+
+private slots:
     void OpenProject();
     void NewProject();
     void SaveProject();
     void SaveProjectAs();
+    void Test();
 
-private slots:
     void on_load_btn_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif WINDOW_H
