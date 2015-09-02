@@ -1,2 +1,2 @@
 # Hamming network. Classification images.
-The first undergraduate course. Coursework.
+The first year coursework.
