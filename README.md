@@ -1,2 +1,2 @@
-# Hamming network. Classification images.
+# Hamming network. Images classification.
 The first year coursework.
